@@ -8,8 +8,6 @@ This repository serves as a **monorepo** for multiple backend projects using **N
 node-express-prisma/
 │── user-url-backend/    # User CRUD & URL Shortener (has its own README)
 │── future-project-1/    # Placeholder for future backend projects
-│── future-project-2/    # Another upcoming backend service
-│── package.json         # Root package file (optional monorepo setup)
 │── README.md            # This documentation
 ```
 
@@ -60,6 +58,6 @@ This repository is **MIT licensed**. You are free to modify and use it as needed
 
 ## 🔗 Author
 
-- **Your Name**
+- **Abhinav peter**
 - GitHub: [Hello-Ship-code](https://github.com/Hello-Ship-Code)
 <!-- - LinkedIn: [your-linkedin](https://linkedin.com/in/your-profile) -->
