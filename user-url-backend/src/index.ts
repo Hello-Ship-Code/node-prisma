@@ -3,7 +3,7 @@ import path from 'path';
 
 import { env } from './env.config';
 
-import { useRouter } from './routes/route-urls';
+import { appRouter } from './routes/route-urls';
 
 const app = express();
 
@@ -18,6 +18,6 @@ app.set("view engine", "ejs");
 app.set("views", viewsPath);
 
 // Router
-app.use('/url', useRouter);
+app.use('/api', appRouter);
 
 app.listen(env.PORT, () => console.log(`Server running on port ${env.PORT}`));

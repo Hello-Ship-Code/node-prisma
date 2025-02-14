@@ -2,9 +2,11 @@ import { Router } from "express";
 
 import { getUrlById, getUrls } from "../controllers/URLS/get-urls";
 
-const useRouter = Router();
+const appRouter = Router()
 
-useRouter.route('/:id').get(getUrlById)
-useRouter.route('/').get(getUrls)
+appRouter.route('/user/:id').get(getUrlById)
+appRouter.route('/user').get(getUrls)
 
-export { useRouter }
+appRouter.route('/url')
+
+export { appRouter }
