@@ -161,14 +161,14 @@ POST /api/url
 
 ```json
 {
-  "longUrl": "https://example.com"
+  "redirectUrl": "https://example.com"
 }
 ```
 
 #### 🔗 Retrieve Original URL
 
 ```http
-GET /api/url/:shortCode
+GET /api/url/:shortId
 ```
 
 ---
@@ -209,6 +209,6 @@ Want to improve this project? Open an issue or submit a PR on **GitHub**! 🔥
 
 ## 🔗 Author
 
-- **Your Name**
-- GitHub: [your-username](https://github.com/your-username)
-- LinkedIn: [your-linkedin](https://linkedin.com/in/your-profile)
+- **Abhinav peter**
+- GitHub: [Hello-Ship-code](https://github.com/Hello-Ship-Code)
+<!-- - LinkedIn: [your-linkedin](https://linkedin.com/in/your-profile) -->
