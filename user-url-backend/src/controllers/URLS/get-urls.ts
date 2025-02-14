@@ -1,10 +1,8 @@
 import { Request, Response, RequestHandler, NextFunction } from 'express'
 
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../connection';
 
 import HttpError from '../../utils/HttpError';
-
-const prisma = new PrismaClient();
 
 export type GetHandler = RequestHandler<{
   id: string;
