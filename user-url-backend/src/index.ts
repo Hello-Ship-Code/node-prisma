@@ -3,7 +3,7 @@ import path from 'path';
 
 import { env } from './env.config';
 
-import { appRouter } from './routes/route-urls';
+import { appRouter } from './routes/routes';
 
 const app = express();
 

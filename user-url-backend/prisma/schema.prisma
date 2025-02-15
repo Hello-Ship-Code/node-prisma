@@ -15,3 +15,10 @@ model users {
   gender    String
   jobTitle  String
 }
+
+model urls {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  shortId      String
+  redirectUrl  String
+  visitHistory Json
+}

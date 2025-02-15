@@ -1,37 +1,22 @@
-import { Request, Response, RequestHandler, NextFunction } from 'express'
+import { type RequestHandler } from 'express';
 
+import { urls } from '@prisma/client'; // Correct PascalCase Import
 import { prisma } from '../../connection';
 
 import HttpError from '../../utils/HttpError';
 
-export type GetHandler = RequestHandler<{
-  id: string;
-}>;
+export type GetUrlHandler = RequestHandler<never, { urls: urls[] }>
 
-export const getUrls = async (_req: Request, res: Response, next: NextFunction) => {
+export const getUrls: GetUrlHandler = async (_req, res, next) => {
   try {
-    const users = await prisma.users.findMany()
-    res.json({ users });
-  } catch (err) {
-    next(err)
-  }
-}
-
-export const getUrlById: GetHandler = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const id = req.params.id;
-    if (!id) {
-      throw new HttpError("url id required", 404);
+    const urls = await prisma.urls.findMany()
+    if (urls.length === 0) {
+      throw new HttpError('no urls found in database', 404)
     }
 
-    const user = await prisma.users.findUnique({ where: { id: id } })
+    res.json({ urls })
 
-    if (!user) {
-      return next(new HttpError("User not found", 404));
-    }
-
-    res.json({ user });
-  } catch (err) {
-    next(err)
+  } catch (error) {
+    next(error)
   }
 }
