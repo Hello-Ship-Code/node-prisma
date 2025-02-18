@@ -5,7 +5,7 @@ import { prisma } from '../../connection';
 
 import HttpError from '../../utils/HttpError';
 
-export type GetHandler = RequestHandler<{ id: string }, { user: users }>;
+export type GetUserHandler = RequestHandler<{ id: string }, { user: users }>;
 export type GetUsersHandler = RequestHandler<never, { users: users[] }>;
 
 export const getUsers: GetUsersHandler = async (_req, res, next) => {
@@ -22,7 +22,7 @@ export const getUsers: GetUsersHandler = async (_req, res, next) => {
   }
 };
 
-export const getUserById: GetHandler = async (req, res, next) => {
+export const getUserById: GetUserHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!id) {

@@ -1,6 +1,7 @@
 import { Router } from "express";
 
-import { getUrls } from "../controllers/urls/get-urls";
+import { getUrlById, getUrls } from "../controllers/urls/get-urls";
+import { postUrl } from "../controllers/urls/post-urls";
 import { getUserById, getUsers } from "../controllers/users/get-users";
 import { postUsers } from "../controllers/users/post-user";
 
@@ -9,6 +10,7 @@ const appRouter = Router()
 appRouter.route('/user/:id').get(getUserById)
 appRouter.route('/user').get(getUsers).post(postUsers)
 
-appRouter.route('/url').get(getUrls)
+appRouter.route('/url/:shortId').get(getUrlById)
+appRouter.route('/url').get(getUrls).post(postUrl)
 
 export { appRouter }

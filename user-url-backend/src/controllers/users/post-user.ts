@@ -5,21 +5,21 @@ import { users } from "@prisma/client";
 import { prisma } from "../../connection";
 
 export const userSchema = z.object({
-  firstName: z.string().min(4, "first name must be at least 4 character"),
-  lastName: z.string().min(4, "last name must be at least 4 character"),
+  firstName: z.string().min(2, "first name must be at least 2 character"),
+  lastName: z.string().min(2, "last name must be at least 2 character"),
   email: z.string().email("Invalid Email Format"),
   gender: z.string().min(2, "last name must be at least 2 character"),
   jobTitle: z.string().min(2, "last name must be at least 2 character"),
 
 })
 
-export type PostHandler = RequestHandler<never, { user: users }, { firstName: string, lastName: string, gmail: string, gender: string, jobTitle: string }>
+export type PostUserHandler = RequestHandler<never, { user: users }, { firstName: string, lastName: string, gmail: string, gender: string, jobTitle: string }>
 
-export const postUsers: PostHandler = async (req, res, next) => {
+export const postUsers: PostUserHandler = async (req, res, next) => {
   try {
     const data = userSchema.parse(req.body);
 
-    const user = await prisma.users.create({
+    const user: users = await prisma.users.create({
       data: {
         firstName: data.firstName,
         lastName: data.lastName,
