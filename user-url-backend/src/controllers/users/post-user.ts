@@ -1,36 +1,52 @@
 import { RequestHandler } from "express";
-import { z } from 'zod'
+import { z } from "zod";
 
-import { users } from "@prisma/client";
+import { User } from "@prisma/client";
 import { prisma } from "../../connection";
 
+import HttpError from "../../utils/HttpError";
+
+// User Schema Validation
 export const userSchema = z.object({
-  firstName: z.string().min(2, "first name must be at least 2 character"),
-  lastName: z.string().min(2, "last name must be at least 2 character"),
-  email: z.string().email("Invalid Email Format"),
-  gender: z.string().min(2, "last name must be at least 2 character"),
-  jobTitle: z.string().min(2, "last name must be at least 2 character"),
+  userName: z.string().min(5, "User name must be at least 5 characters long"),
+  email: z.string().email("Invalid email format"),
+  password: z.string()
+    .min(5, "Password must be at least 5 characters long")
+    .max(32, "Password should not exceed 32 characters")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character")
+    .regex(/^\S*$/, "Password cannot contain spaces")
+});
 
-})
+// Type Definition for Request Handler
+export type PostUserHandler = RequestHandler<
+  never,
+  { user: User } | { error: string },
+  { userName: string; email: string; password: string }
+>;
 
-export type PostUserHandler = RequestHandler<never, { user: users }, { firstName: string, lastName: string, gmail: string, gender: string, jobTitle: string }>
-
+// POST /api/user handler
 export const postUsers: PostUserHandler = async (req, res, next) => {
   try {
     const data = userSchema.parse(req.body);
 
-    const user: users = await prisma.users.create({
-      data: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        gender: data.gender,
-        jobTitle: data.jobTitle
-      },
-    })
+    const existingUser = await prisma.user.findUnique({ where: { email: data.email } });
+    if (existingUser) {
+      next(new HttpError('user already exits', 409))
+    }
 
-    res.json({ user })
+    const newUser = await prisma.user.create({
+      data: {
+        userName: data.userName,
+        email: data.email,
+        password: data.password,
+      },
+    });
+
+    res.status(201).json({ user: newUser });
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};

@@ -1,23 +1,28 @@
-import express from 'express';
-import path from 'path';
+// Express Server Setup
+import express from "express";
+import path from "path";
 
-import { env } from './env.config';
+import { env } from "./env.config";
+import { errorHandler } from "./handlers/error-handlers";
 
-import { appRouter } from './routes/routes';
+import { userRouter } from "./routes/user-router";
 
 const app = express();
+const viewsPath = path.join(__dirname, "..", "src", "views");
 
-const viewsPath = path.join(__dirname, "..", "src", "views"); // ✅ Correct path
-
-// Middle wares to handle form
+// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Server Side rendering
+// Server-Side Rendering Setup
 app.set("view engine", "ejs");
 app.set("views", viewsPath);
 
-// Router
-app.use('/api', appRouter);
+// Routes
+app.use("/api/user", userRouter);
 
+// Error Handler
+app.use(errorHandler);
+
+// Start Server
 app.listen(env.PORT, () => console.log(`Server running on port ${env.PORT}`));

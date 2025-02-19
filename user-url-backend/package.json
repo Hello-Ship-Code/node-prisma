@@ -14,10 +14,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@prisma/client": "^6.3.1",
+    "@prisma/client": "^6.4.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "prisma": "^6.3.1",
     "shortid": "^2.2.17",
     "zod": "^3.24.2"
   },
@@ -26,6 +25,7 @@
     "@types/node": "^22.13.2",
     "@types/shortid": "^2.2.0",
     "nodemon": "^3.1.9",
+    "prisma": "^6.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   }
